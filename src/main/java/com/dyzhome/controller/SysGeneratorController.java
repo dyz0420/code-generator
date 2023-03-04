@@ -8,10 +8,10 @@
 
 package com.dyzhome.controller;
 
+import com.dyzhome.service.SysGeneratorService;
 import com.dyzhome.utils.PageUtils;
 import com.dyzhome.utils.Query;
 import com.dyzhome.utils.R;
-import com.dyzhome.service.SysGeneratorService;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,7 +28,7 @@ import java.util.Map;
 /**
  * 代码生成器
  *
- * @author Mark sunlightcs@gmail.com
+ * @author Dyz
  */
 @Controller
 @RequestMapping("/sys/generator")
