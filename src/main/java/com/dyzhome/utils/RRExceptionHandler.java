@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Component
 public class RRExceptionHandler implements HandlerExceptionResolver {
-	private Logger logger = LoggerFactory.getLogger(getClass());
+	private final Logger logger = LoggerFactory.getLogger(getClass());
 	
 	@Override
 	public ModelAndView resolveException(HttpServletRequest request,

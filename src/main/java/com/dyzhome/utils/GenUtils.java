@@ -26,8 +26,10 @@ import java.util.zip.ZipOutputStream;
  */
 public class GenUtils {
 
-    private static String currentTableName;
-
+    /**
+     * 获取模板
+     * @return 模板列表
+     */
     public static List<String> getTemplates() {
         List<String> templates = new ArrayList<>();
         templates.add("template/Entity.java.vm");
@@ -36,14 +38,14 @@ public class GenUtils {
         templates.add("template/ServiceImpl.java.vm");
         templates.add("template/Controller.java.vm");
         templates.add("template/Mapper.java.vm");
+        templates.add("template/Convert.java.vm");
         return templates;
     }
 
     /**
      * 生成代码
      */
-    public static void generatorCode(Map<String, String> table,
-                                     List<Map<String, String>> columns, ZipOutputStream zip) {
+    public static void generatorCode(Map<String, String> table, List<Map<String, String>> columns, ZipOutputStream zip) {
         //配置信息
         Configuration config = getConfig();
         boolean hasBigDecimal = false;
@@ -98,7 +100,7 @@ public class GenUtils {
         String mainPath = config.getString("mainPath");
         mainPath = StringUtils.isBlank(mainPath) ? "io.renren" : mainPath;
         //封装模板数据
-        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>(13);
         map.put("tableName", tableEntity.getTableName());
         map.put("comments", tableEntity.getComments());
         map.put("pk", tableEntity.getPk());
@@ -110,9 +112,7 @@ public class GenUtils {
         map.put("hasList", hasList);
         map.put("mainPath", mainPath);
         map.put("package", config.getString("package"));
-        map.put("moduleName", config.getString("moduleName"));
         map.put("author", config.getString("author"));
-        map.put("email", config.getString("email"));
         map.put("datetime", DateUtils.format(new Date(), DateUtils.DATE_TIME_PATTERN));
         VelocityContext context = new VelocityContext(map);
 
@@ -179,7 +179,9 @@ public class GenUtils {
         if (template.contains("Entity.java.vm")) {
             return packagePath + "model" + File.separator + "entity" + File.separator + className + ".java";
         }
-
+        if (template.contains("Convert.java.vm")) {
+            return packagePath + "model" + File.separator + "convert" + File.separator + className + "Convert.java";
+        }
         if (template.contains("Mapper.java.vm")) {
             return packagePath + "mapper" + File.separator + className + "Mapper.java";
         }

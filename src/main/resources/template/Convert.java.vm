@@ -1,0 +1,13 @@
+package ${package}.model.convert;
+
+import org.mapstruct.Mapper;
+
+/**
+ * ${comments}模型转换
+ *
+ * @author ${author}
+ */
+@Mapper(componentModel = "spring")
+public class ${className}Convert {
+
+}
