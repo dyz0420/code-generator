@@ -6,7 +6,7 @@
 	<artifactId>code-generator</artifactId>
 	<version>1.0.0</version>
 	<packaging>jar</packaging>
-	<description>renren-generator</description>
+	<description>code-generator</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -30,9 +30,15 @@
 		<mssql.version>4.0</mssql.version>
 		<oracle.version>11.2.0.3</oracle.version>
 		<mongo.version>3.11.0</mongo.version>
+		<hutool.version>5.7.9</hutool.version>
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>cn.hutool</groupId>
+			<artifactId>hutool-all</artifactId>
+			<version>${hutool.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>

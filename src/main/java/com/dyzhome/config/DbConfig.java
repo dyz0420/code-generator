@@ -1,7 +1,7 @@
 package com.dyzhome.config;
 
 import com.dyzhome.dao.GeneratorDao;
-import com.dyzhome.dao.MySQLGeneratorDao;
+import com.dyzhome.dao.MysqlGeneratorDao;
 import com.dyzhome.utils.Constant;
 import com.dyzhome.utils.RRException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ public class DbConfig {
     @Value("${database.type: mysql}")
     private String database;
     @Autowired
-    private MySQLGeneratorDao mySQLGeneratorDao;
+    private MysqlGeneratorDao mySQLGeneratorDao;
 
     @Bean
     @Primary

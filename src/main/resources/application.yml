@@ -26,6 +26,6 @@ pagehelper:
 
 database:
   type: mysql
-logging:
-  level:
-    com.dyzhome.dao: debug
+#logging:
+#  level:
+#    com.dyzhome.dao: debug

@@ -8,6 +8,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @author Dyz
  */
 @Mapper
-public interface MySQLGeneratorDao extends GeneratorDao {
+public interface MysqlGeneratorDao extends GeneratorDao {
 
 }

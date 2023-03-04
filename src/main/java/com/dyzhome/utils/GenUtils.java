@@ -15,6 +15,7 @@ import org.apache.velocity.app.Velocity;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -39,6 +40,7 @@ public class GenUtils {
         templates.add("template/Controller.java.vm");
         templates.add("template/Mapper.java.vm");
         templates.add("template/Convert.java.vm");
+        templates.add("template/DTO.java.vm");
         return templates;
     }
 
@@ -97,10 +99,8 @@ public class GenUtils {
         Properties prop = new Properties();
         prop.put("file.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
         Velocity.init(prop);
-        String mainPath = config.getString("mainPath");
-        mainPath = StringUtils.isBlank(mainPath) ? "io.renren" : mainPath;
         //封装模板数据
-        Map<String, Object> map = new HashMap<>(13);
+        Map<String, Object> map = new HashMap<>(12);
         map.put("tableName", tableEntity.getTableName());
         map.put("comments", tableEntity.getComments());
         map.put("pk", tableEntity.getPk());
@@ -110,12 +110,10 @@ public class GenUtils {
         map.put("columns", tableEntity.getColumns());
         map.put("hasBigDecimal", hasBigDecimal);
         map.put("hasList", hasList);
-        map.put("mainPath", mainPath);
         map.put("package", config.getString("package"));
         map.put("author", config.getString("author"));
-        map.put("datetime", DateUtils.format(new Date(), DateUtils.DATE_TIME_PATTERN));
+        map.put("datetime", DateUtils.formatDateTime(LocalDateTime.now()));
         VelocityContext context = new VelocityContext(map);
-
         //获取模板列表
         List<String> templates = getTemplates();
         for (String template : templates) {
@@ -175,12 +173,14 @@ public class GenUtils {
         if (StringUtils.isNotBlank(packageName)) {
             packagePath += packageName.replace(".", File.separator) + File.separator;
         }
-
         if (template.contains("Entity.java.vm")) {
             return packagePath + "model" + File.separator + "entity" + File.separator + className + ".java";
         }
         if (template.contains("Convert.java.vm")) {
             return packagePath + "model" + File.separator + "convert" + File.separator + className + "Convert.java";
+        }
+        if (template.contains("DTO.java.vm")) {
+            return packagePath + "model" + File.separator + "dto" + File.separator + className + "DTO.java";
         }
         if (template.contains("Mapper.java.vm")) {
             return packagePath + "mapper" + File.separator + className + "Mapper.java";

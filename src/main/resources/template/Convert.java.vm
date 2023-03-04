@@ -1,6 +1,10 @@
 package ${package}.model.convert;
 
+import ${package}.model.dto.${className}DTO;
+import ${package}.model.entity.${className};
 import org.mapstruct.Mapper;
+
+import java.util.List;
 
 /**
  * ${comments}模型转换
@@ -8,6 +12,32 @@ import org.mapstruct.Mapper;
  * @author ${author}
  */
 @Mapper(componentModel = "spring")
-public class ${className}Convert {
+public interface ${className}Convert {
+    /**
+     * dto转实体类
+     * @param dto dto
+     * @return 实体类
+     */
+    ${className} dtoConvertEntity(${className}DTO dto);
 
+    /**
+     * 实体转dto
+     * @param entity 实体类
+     * @return dto
+     */
+    ${className}DTO entityConvertDto(${className} entity);
+
+    /**
+     * dtos转entities
+     * @param list dtos
+     * @return entities
+     */
+    List<${className}> dtoListConvertentityList(List<${className}DTO> list);
+
+    /**
+     * entities转dtos
+     * @param list entities
+     * @return dtos
+     */
+    List<${className}DTO> entityListConvertDtoList(List<${className}> list);
 }
