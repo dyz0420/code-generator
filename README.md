@@ -15,6 +15,7 @@ main
             |-mapper
             |-model
                 |-convert
+                |-dto
                 |-entity
             |-service
                 |-impl
