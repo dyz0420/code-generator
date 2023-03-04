@@ -1,5 +1,5 @@
 # code-generator
-代码生成器
+代码生成器，生成的代码所需要的依赖有：springboot、mybatis-plus、lombok、mapstruct
 
 # 使用方法
 - 修改application.yml中的数据源信息（仅支持mysql数据库）
