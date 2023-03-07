@@ -41,6 +41,7 @@ public class GenUtils {
         templates.add("template/Mapper.java.vm");
         templates.add("template/Convert.java.vm");
         templates.add("template/DTO.java.vm");
+        templates.add("template/VO.java.vm");
         return templates;
     }
 
@@ -181,6 +182,9 @@ public class GenUtils {
         }
         if (template.contains("DTO.java.vm")) {
             return packagePath + "model" + File.separator + "dto" + File.separator + className + "DTO.java";
+        }
+        if (template.contains("VO.java.vm")) {
+            return packagePath + "model" + File.separator + "vo" + File.separator + className + "VO.java";
         }
         if (template.contains("Mapper.java.vm")) {
             return packagePath + "mapper" + File.separator + className + "Mapper.java";

@@ -1,6 +1,7 @@
 package ${package}.model.convert;
 
 import ${package}.model.dto.${className}DTO;
+import ${package}.model.vo.${className}VO;
 import ${package}.model.entity.${className};
 import org.mapstruct.Mapper;
 
@@ -40,4 +41,33 @@ public interface ${className}Convert {
      * @return dtos
      */
     List<${className}DTO> entityListConvertDtoList(List<${className}> list);
+
+
+    /**
+     * vo转实体类
+     * @param vo vo
+     * @return 实体类
+     */
+        ${className} voConvertEntity(${className}VO vo);
+
+    /**
+     * 实体转vo
+     * @param entity 实体类
+     * @return vo
+     */
+        ${className}VO entityConvertVo(${className} entity);
+
+    /**
+     * vos转entities
+     * @param list vos
+     * @return entities
+     */
+    List<${className}> voListConvertentityList(List<${className}VO> list);
+
+    /**
+     * entities转vos
+     * @param list entities
+     * @return vos
+     */
+    List<${className}VO> entityListConvertVoList(List<${className}> list);
 }

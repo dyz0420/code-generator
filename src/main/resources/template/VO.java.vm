@@ -1,4 +1,4 @@
-package ${package}.model.dto;
+package ${package}.model.vo;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -7,14 +7,14 @@ import io.swagger.annotations.ApiModel;
 import java.io.Serializable;
 
 /**
- * ${comments}DTO
+ * ${comments}VO
  *
  * @author ${author}
  */
 @Data
 @Accessors(chain = true)
-@ApiModel("${className}DTO")
-public class ${className}DTO implements Serializable {
+@ApiModel("${className}VO")
+public class ${className}VO implements Serializable {
     private static final long serialVersionUID = 1L;
 
 
