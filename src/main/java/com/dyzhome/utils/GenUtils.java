@@ -1,6 +1,7 @@
 package com.dyzhome.utils;
 
 import com.dyzhome.entity.ColumnEntity;
+import com.dyzhome.entity.Settings;
 import com.dyzhome.entity.TableEntity;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
@@ -58,7 +59,7 @@ public class GenUtils {
         tableEntity.setTableName(table.get("tableName"));
         tableEntity.setComments(table.get("tableComment"));
         //表名转换成Java类名
-        String className = tableToJava(tableEntity.getTableName(), config.getStringArray("tablePrefix"));
+        String className = tableToJava(tableEntity.getTableName(), Settings.tablePrefix);
         tableEntity.setClassName(className);
         tableEntity.setClassname(StringUtils.uncapitalize(className));
 
@@ -111,8 +112,8 @@ public class GenUtils {
         map.put("columns", tableEntity.getColumns());
         map.put("hasBigDecimal", hasBigDecimal);
         map.put("hasList", hasList);
-        map.put("package", config.getString("package"));
-        map.put("author", config.getString("author"));
+        map.put("package", Settings.pack);
+        map.put("author", Settings.author);
         map.put("datetime", DateUtils.formatDateTime(LocalDateTime.now()));
         VelocityContext context = new VelocityContext(map);
         //获取模板列表
@@ -124,12 +125,12 @@ public class GenUtils {
             tpl.merge(context, sw);
             try {
                 //添加到zip
-                zip.putNextEntry(new ZipEntry(Objects.requireNonNull(getFileName(template, tableEntity.getClassName(), config.getString("package")))));
+                zip.putNextEntry(new ZipEntry(Objects.requireNonNull(getFileName(template, tableEntity.getClassName(), Settings.pack))));
                 IOUtils.write(sw.toString(), zip, "UTF-8");
                 IOUtils.closeQuietly(sw);
                 zip.closeEntry();
             } catch (IOException e) {
-                throw new RRException("渲染模板失败，表名：" + tableEntity.getTableName(), e);
+                throw new MyException("渲染模板失败，表名：" + tableEntity.getTableName(), e);
             }
         }
     }
@@ -162,7 +163,7 @@ public class GenUtils {
         try {
             return new PropertiesConfiguration("generator.properties");
         } catch (ConfigurationException e) {
-            throw new RRException("获取配置文件失败，", e);
+            throw new MyException("获取配置文件失败，", e);
         }
     }
 

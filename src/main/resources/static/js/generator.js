@@ -35,26 +35,80 @@ $(function () {
     });
 });
 
-var vm = new Vue({
+const vm = new Vue({
     el: '#rrapp',
     data: {
+        formConnect: {
+            ip: '127.0.0.1',
+            port: '3306',
+            username: 'root',
+            password: '123456',
+            dbName: '',
+            tablePrefix: [],
+            author: '',
+            pack: ''
+        },
         q: {
-            tableName: null
-        }
+            tableName: null,
+        },
+        key: sessionStorage.getItem("key") ? sessionStorage.getItem("key") : null
     },
     methods: {
         query: function () {
-            $("#jqGrid").jqGrid('setGridParam', {
-                postData: {'tableName': vm.q.tableName},
-                page: 1
-            }).trigger("reloadGrid");
+            $.get("sys/generator/check", {uuid: vm.key}, function (res) {
+                if (res.success === true) {
+                    $("#jqGrid").jqGrid('setGridParam', {
+                        postData: {
+                            'tableName': vm.q.tableName
+                        },
+                        page: 1
+                    }).trigger("reloadGrid");
+                } else {
+                    alert("请连接数据库");
+                }
+            })
+        },
+        getConnection: function () {
+            $.ajax({
+                url: "/sys/generator/connect",
+                type: "GET",
+                data: {
+                    ip: vm.formConnect.ip,
+                    port: vm.formConnect.port,
+                    username: vm.formConnect.username,
+                    password: vm.formConnect.password,
+                    dbName: vm.formConnect.dbName,
+                    tablePrefix: vm.formConnect.tablePrefix,
+                    author: vm.formConnect.author,
+                    pack: vm.formConnect.pack
+                },
+                success: function (res) {
+                    if (res.code !== 0) {
+                        alert("连接失败，请检查表单信息！");
+                        return;
+                    }
+                    vm.key = res.connect;
+                    sessionStorage.setItem("key", res.connect)
+                    vm.query();
+                    alert("连接成功！");
+                },
+                error: function (err) {
+                    alert("连接失败，请检查表单信息！");
+                }
+            })
         },
         generator: function () {
-            var tableNames = getSelectedRows();
+            const tableNames = getSelectedRows();
             if (tableNames == null) {
                 return;
             }
-            location.href = "sys/generator/code?tables=" + tableNames.join();
+            $.get("sys/generator/check", {uuid: vm.key}, function (res) {
+                if (res.success === true) {
+                    location.href = "sys/generator/code?tables=" + tableNames.join();
+                } else {
+                    alert("请连接数据库");
+                }
+            })
         }
     }
 });
